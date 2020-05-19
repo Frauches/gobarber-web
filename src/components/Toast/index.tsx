@@ -1,8 +1,11 @@
 import React from 'react';
 import { FiAlertCircle, FiXCircle } from 'react-icons/fi';
 import { Container, Content } from './styles';
+import { useToast } from '../../context/ToastContext';
 
 const Toast = () => {
+  const { removeToast } = useToast();
+
   return (
     <Container>
       <Content hasDescription>
@@ -21,7 +24,7 @@ const Toast = () => {
           <strong>Atenção</strong>
           {/* <p>Aqui conterá algum feedback</p> */}
         </div>
-        <button>
+        <button onClick={removeToast}>
           <FiXCircle size={18} />
         </button>
       </Content>

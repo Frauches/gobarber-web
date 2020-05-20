@@ -1,16 +1,35 @@
-import React, { createContext, useCallback, useContext } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import Toast from './../components/Toast/index';
+import { uuid } from 'uuidv4';
+
+export interface ToastMessage {
+  id: string;
+  description: string;
+  type?: 'success' | 'error' | 'info';
+  title: string;
+}
 
 interface ToastContextData {
-  addToast(): void;
+  addToast(message: Omit<ToastMessage, 'id'>): void;
   removeToast(): void;
 }
 
 const ToastContext = createContext<ToastContextData>({} as ToastContextData);
 
 const ToastProvider: React.FC = ({ children }) => {
-  const addToast = useCallback(() => {
-    console.log('addToast');
+  const [messages, setMessages] = useState<ToastMessage[]>([]);
+
+  const addToast = useCallback(({ type, title, description }: Omit<ToastMessage, 'id'>) => {
+    const id = uuid();
+
+    const toast = {
+      id,
+      type,
+      title,
+      description
+    }
+
+    setMessages((oldState) => [...oldState, toast]);
   }, []);
 
   const removeToast = useCallback(() => {
@@ -20,7 +39,7 @@ const ToastProvider: React.FC = ({ children }) => {
   return (
     <ToastContext.Provider value={{ addToast, removeToast }}>
       {children}
-      <Toast />
+      <Toast messages={messages}/>
     </ToastContext.Provider>
   );
 };

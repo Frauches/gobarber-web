@@ -10,6 +10,7 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import { useAuth } from './../../context/AuthContext';
 import { useToast } from './../../context/ToastContext';
 import { Background, Container, Content } from './styles';
+import { Link } from 'react-router-dom';
 
 interface SignInFormData {
   email: string;
@@ -41,6 +42,7 @@ const SignIn: React.FC = () => {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           formRef.current?.setErrors(errors);
+          return;
         }
 
         addToast({
@@ -75,10 +77,10 @@ const SignIn: React.FC = () => {
           <a href="forgot">Esqueci minha senha</a>
         </Form>
 
-        <a href="createAccount">
+        <Link to="/signup">
           <FiLogIn />
           Criar conta
-        </a>
+        </Link>
       </Content>
 
       <Background />

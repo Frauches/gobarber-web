@@ -8,6 +8,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import getValidationErrors from '../../utils/getValidationErrors';
+import { Link } from 'react-router-dom';
 
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
@@ -25,7 +26,7 @@ const SignUp: React.FC = () => {
 
       await schema.validate(data, {
         abortEarly: false,
-      })
+      });
     } catch (err) {
       const errors = getValidationErrors(err);
       formRef.current?.setErrors(errors);
@@ -55,10 +56,10 @@ const SignUp: React.FC = () => {
           <Button type="submit">Cadastrar</Button>
         </Form>
 
-        <a href="createAccount">
+        <Link to="/">
           <FiArrowLeft />
           Voltar para logon
-        </a>
+        </Link>
       </Content>
     </Container>
   );

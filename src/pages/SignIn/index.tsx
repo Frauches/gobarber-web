@@ -10,7 +10,7 @@ import Input from '../../components/Input/';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { useAuth } from './../../context/AuthContext';
 import { useToast } from './../../context/ToastContext';
-import { Background, Container, Content, AnimationContainer } from './styles';
+import { AnimationContainer, Background, Container, Content } from './styles';
 
 interface SignInFormData {
   email: string;
@@ -19,7 +19,7 @@ interface SignInFormData {
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const { user, signIn } = useAuth();
+  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
@@ -42,7 +42,6 @@ const SignIn: React.FC = () => {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
           formRef.current?.setErrors(errors);
-          return;
         }
 
         addToast({

@@ -25,7 +25,7 @@ const Toast: React.FC<ToastProps> = ({ message, style }) => {
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [message.id, removeToast]);
 
   return (
     <Container
